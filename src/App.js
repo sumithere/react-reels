@@ -1,25 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useContext, useEffect } from 'react'
+import {AuthProvider} from './context/AuthContext';
+import { Route, BrowserRouter as Router,Redirect,Link,Switch } from 'react-router-dom';
+import Feed from './component/Feed'
+import Login from './component/Login'
+import Signup from './component/Signup';
+import Profile from './component/Profile';
+import { AuthContext } from './context/AuthContext';
+// import { createBrowserHistory } from 'history';
+
+// const history = createBrowserHistory();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+          <Switch>
+            <Route path="/login" component={Login}></Route>
+            <Route path="/signup" component={Signup}></Route>
+            <PrivateRoute path="/profile" abc={Profile}></PrivateRoute>
+            <PrivateRoute path="/" abc={Feed}></PrivateRoute>
+          </Switch>
+        </Router>
+    </AuthProvider>
   );
 }
+function PrivateRoute(props){
+  const Component=props.abc;
+  let {currentUser}=useContext(AuthContext);
+  return(<Route {...props} render={
+    (props)=>{
+        return (currentUser!=null?<Component {...props}></Component>:<Redirect to="/login "></Redirect>)
+    }
+  } ></Route>)
 
+}
 export default App;

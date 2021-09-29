@@ -5,6 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: lightgreen; */
+}
+#root{
+  
+}
+*{
+  
+  box-sizing: border-box;
 }
 
 code {

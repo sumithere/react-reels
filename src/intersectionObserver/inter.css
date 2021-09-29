@@ -1,0 +1,9 @@
+.video-container{
+    /* height:100vh; */
+    margin:8vh;
+    /* background-color: lightblue; */
+}
+.video-style{
+    height:80vh;
+    border:2px solid red;
+}
