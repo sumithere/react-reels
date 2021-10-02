@@ -101,7 +101,7 @@ function Profile() {
                         <div className="user_posts">
                             {posts.map((url, idx) => {
                                 return (
-                                    <video src={url} key={idx} className={[classes.video]} muted type="video/mp4" controls >
+                                    <video src={url} key={idx} className={[classes.video]} type="video/mp4" controls >
                                     </video>
                                 )
                             })}
