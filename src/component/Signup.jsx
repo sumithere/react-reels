@@ -46,7 +46,8 @@ function Signup(props) {
                 console.log('File available at', fileUrl);
                 database.users.doc(uid).set({
                     email, password, "name": userName, "profileUrl": fileUrl, "userId": uid,
-                    "createdAt": database.getUserTimeStamp()
+                    "createdAt": database.getUserTimeStamp(),
+                    postIds:[]
                 })
                 setLoading(false);
                 props.history.push('/');

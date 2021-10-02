@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 // import UseEffect from "./TestCOmponent/UseEffect";
 // import MyComponent, { MyContext } from "./TestCOmponent/q5";
 import Material from "./Material";
-import IntersectionDemo from "./intersectionObserver/IntersectionDemo"
+// import IntersectionDemo from "./intersectionObserver/IntersectionDemo"
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -46,7 +46,7 @@ function Login(props) {
             backgroundColor: "lightGrey"
         },
         cardSize: {
-            height: "54vh"
+            height: "59vh"
         },
         padding: {
 
@@ -68,10 +68,8 @@ function Login(props) {
                     height: "100vh",
 
                 }}>
-
-
                     <Grid container className={classes.cont} style={{ alignItems: "center", height: "100%", justifyContent: "center" }} >
-                        <Grid item xs={5} md={4} className={classes.crousal}><Paper style={{display:"block"}}>
+                        <Grid item xs={8} sm={5} md={5} className={classes.crousal}><Paper style={{display:"block"}}>
                             <Carousel style={{backgroundColor:"lightPink"}}>
                                 <div style={{}}>
                                     <img className={classes.crousal}
@@ -88,7 +86,7 @@ function Login(props) {
                                 </div>
                             </Carousel>
                         </Paper> </Grid>
-                        <Grid item xs={5} md={4} >
+                        <Grid item xs={8} sm={5} md={5} >
                             <Card className={classes.cardSize}>
                                 <CardActionArea className={classes.fitIn}>
                                     <CardMedia

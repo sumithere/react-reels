@@ -10,6 +10,8 @@ export default auth;
 export const storage=firebase.storage();
 export const database={
     users: firestore.collection("users"),
+    posts:firestore.collection("posts"),
+    comments:firestore.collection("comments"),
     getUserTimeStamp: firebase.firestore.FieldValue.serverTimestamp
 }
 // export const database;
