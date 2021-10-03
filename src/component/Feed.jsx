@@ -176,18 +176,23 @@ function Feed(props) {
                     for (let i in commentsOnPostsArr) {
                         let cid = commentsOnPostsArr[i];
                         let commentObj = await database.comments.doc(cid).get();
+                        if(commentObj.exists){
                         let comment = commentObj.data();
                         commentArr.push(comment);
+                        }
                     }
                     let likesArr = [];
                     for (let i in likesonPostArr) {
                         let cid = likesonPostArr[i];
                         let userObj = await database.users.doc(cid).get();
+                        if(userObj.exists){
                         let curruser = userObj.data();
                         let obj = { "userName": curruser.name, "userPrifilePic": curruser.profileUrl }
                         likesArr.push(obj);
+                        }
                     }
                     let userObject = await database.users.doc(auid).get();
+                    if(userObject.exists){
                     let profilePic = userObject.data().profileUrl;
                     let userName = userObject.data().name;
                     videosArr.push({
@@ -200,6 +205,7 @@ function Feed(props) {
                         isLiked: boolVal,
                         isOverLay: false
                     });
+                    }
                     console.log(videosArr, videosArr.length);
                 }
                 console.log(videos);
@@ -324,24 +330,34 @@ function Feed(props) {
     }
     //giving styles
     const useStyles = makeStyles({
-        icon: {
+        iconChat: {
             // backgroundColor: "red"
             position: "relative",
             bottom: "42px",
-            fontSize: "25px"
-        },
-        heart: {
-            left: "-21vw",
-        },
-        chat: {
-            left: "32vw"
-        },
-        notSelected: {
+            fontSize: "25px",
+            position: "relative",
+            left: "6rem",
+            bottom: "86px",
             color: "lightgray"
+
+        },
+        // chat: {
+        //     left: "32vw"
+        // },
+        notSelectedHeart: {
+            color: "lightgray",
+            position: "relative",
+            bottom: "42px",
+            fontSize: "25px",
+            left: "-24vw",
         }
         ,
-        selected: {
-            color: "red"
+        selectedHeart: {
+            color: "red",
+            position: "relative",
+            bottom: "42px",
+            fontSize: "25px",
+            left: "-21vw",
         },
         noOfLikes: {
             width: "2rem",
@@ -352,9 +368,7 @@ function Feed(props) {
             color: "white"
         },
         comment: {
-            position: "relative",
-            left: "6rem",
-            bottom: "86px"
+           
         }
     })
     const Input = styled('input')({
@@ -389,11 +403,11 @@ function Feed(props) {
                                 console.log(like, idx);
                                 return (<div className="video-container" id="video-container" key={idx}>
                                     <Video muted="muted" src={videoObj.postUrl} id={videoObj.puid} profilePic={videoObj.profilePic} userName={videoObj.userName} ></Video>
-                                    <FavouriteIcon className={[classes.icon, classes.heart, like == false ? classes.notSelected : classes.selected]}
+                                    <FavouriteIcon className={like == false ? classes.notSelectedHeart : classes.selectedHeart}
                                         onClick={() => { handleLiked(videoObj.puid) }}
                                     ></FavouriteIcon>
                                     <div className={classes.noOfLikes}>{like}</div>
-                                    <ChatBubbleIcon className={[classes.icon, classes.comment, classes.chat, classes.notSelected]} onClick={() => { handleCommentClicked(videoObj.puid) }}>
+                                    <ChatBubbleIcon className={classes.iconChat} onClick={() => { handleCommentClicked(videoObj.puid) }}>
                                     </ChatBubbleIcon>
                                     {videoObj.isOverlayActive == true ? < Overlay handleCommentAdded={handleCommentAdded} puid={videoObj.puid} comments={videoObj.comments}></Overlay> : null}
 
@@ -498,14 +512,14 @@ function Overlay(props) {
                 handleCommentAdded(puid, comment);
             }}>button</Button>
             <Paper style={{ padding: "15px 7px", marginTop: 10, width: "16rem" }}>
-                {comments.map((commentObj) => {
-                    return (
+                {comments.map((commentObj,idx) => {
+                    return (<div key={idx}>
                         <Grid container wrap="nowrap" spacing={0}>
                             <Grid item>
                             <Avatar size="small" alt="Sumit" src={commentObj.userPrifilePic} />
                                 {/* <Avatar style={{ padding: "8px", }} alt="sumit" src={commentObj.userPrifilePic} /> */}
                             </Grid>
-                            <Grid justifyContent="left" item xs zeroMinWidth>
+                            <Grid justifycontent="left" item xs zeroMinWidth>
                                 <h4 style={{ margin: 0, textAlign: "left" }}>{commentObj.userName}</h4>
                                 <p style={{ textAlign: "left" }}>
                                     {commentObj.comment}
@@ -515,6 +529,7 @@ function Overlay(props) {
                                 </p>
                             </Grid>
                         </Grid>
+                        </div>
                     )
                 })}
             </Paper>

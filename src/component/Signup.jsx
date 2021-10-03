@@ -67,7 +67,8 @@ function Signup(props) {
         displayCard: {
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            flexDirection: "column"
         },
         cardSize: {
             height: "28rem",
@@ -77,10 +78,7 @@ function Signup(props) {
             width: "100%",
             padding: "10px", marginBottom: "-10px"
         }
-        ,
-        cardAction: {
-            flexDirection: "column"
-        }
+        
 
     })
     let classes = useStyles();
@@ -118,7 +116,7 @@ function Signup(props) {
                             </IconButton>
                         
                     </CardActionArea>
-                    <CardActions className={[classes.cardAction, classes.displayCard]}>
+                    <CardActions className={classes.displayCard}>
                         <Button className={classes.width} color="primary" variant="contained" style={{ margin: "0px" }} onClick={handleSignup}>Sign up</Button>
                         <Typography paragraph={true} variant="overline" display="block" style={{ textAlign: "center" }}>By signing up,you agree to our Terms,Data Policy and Cookies Policy</Typography>
                     </CardActions>

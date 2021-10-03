@@ -10,15 +10,9 @@ import reportWebVitals from './reportWebVitals';
 import Material from "./Material";
 // import IntersectionDemo from "./intersectionObserver/IntersectionDemo"
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <App />
-    {/* <Material></Material> */}
-    {/* <Test></Test> */}
-    {/* <UseEffect></UseEffect> */}
-    {/* <ContextParent></ContextParent> */}
-    {/* <Material></Material> */}
-    {/* <IntersectionDemo></IntersectionDemo> */}
-  </React.StrictMode>,
+  ,
   document.getElementById('root')
 );
 // If you want to start measuring performance in your app, pass a function
