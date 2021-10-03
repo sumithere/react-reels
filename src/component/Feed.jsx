@@ -357,7 +357,7 @@ function Feed(props) {
             position: "relative",
             bottom: "42px",
             fontSize: "25px",
-            left: "-21vw",
+            left: "-24vw",
         },
         noOfLikes: {
             width: "2rem",
