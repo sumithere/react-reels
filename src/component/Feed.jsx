@@ -171,7 +171,7 @@ function Feed(props) {
                     if (index != -1) {
                         boolVal = true;
                     }
-                    console.log(index, boolVal);
+                    // console.log(index, boolVal);
                     let commentArr = [];
                     for (let i in commentsOnPostsArr) {
                         let cid = commentsOnPostsArr[i];
@@ -271,10 +271,10 @@ function Feed(props) {
         let post = postRef.data();
         let likesArr = post.likes;
         const userid = user.userId;
-        let index = videos.findIndex((video) => {
-            return video.puid == puid;
-        });
-        if (videos[index].isLiked == true) {
+        let likesIndex=likesArr.findIndex((likesUid)=>{
+            return likesUid==userid
+        })
+        if (likesIndex!=-1) {
             let like = likesArr.filter(function (auid) {
                 return (auid != userid);
             })
@@ -287,13 +287,22 @@ function Feed(props) {
                 "likes": [...likesArr, userid]
             })
         }
-        // let copyofVideos = [...videos];
-
-        let ithvideo = videos[index];
-        let likesObj = { "userName": user.name, "userPrifilePic": user.profileUrl }
-        console.log();
-        let newObject = { ...ithvideo, "isLiked": true, "likes": likesObj };
-        setVideos([...videos, newObject]);
+        // let index = videos.findIndex((video) => {
+        //     return video.puid == puid;
+        // });
+        // let ithvideo = videos[index];
+        // if(likesIndex==-1){
+        //     let likesObj = { "userName": user.name, "userPrifilePic": user.profileUrl }
+        //     let newObject = { ...ithvideo, "isLiked": true, "likes": likesObj };
+        //     setVideos([...videos, newObject]);
+        // }
+        // else{
+        //     let likesArr=ithvideo.likes;
+        //     likesArr.splice(-1,1);
+        //     let newObject = { ...ithvideo, "isLiked": false, "likes": likesArr };
+        //     setVideos([...videos,newObject]);
+        //     console.log(videos[index].isLiked);
+        // }
         // setLiked(!isLiked);
     }
     // handling comment adding
@@ -303,7 +312,7 @@ function Feed(props) {
             return video.puid == puid;
         });
         let videoObj = copyofVideos[idx];
-        videoObj.isOverlayActive = true;
+        videoObj.isOverlayActive = !videoObj.isOverlayActive;
         setVideos(copyofVideos);
     }
     const handleCommentAdded = async (puid, comment) => {
@@ -321,12 +330,15 @@ function Feed(props) {
         await database.posts.doc(puid).update({
             comments: [...prevComments, docRef.id]
         })
-        let index = videos.findIndex((video) => {
-            return video.puid == puid;
-        });
-        let ithvideo = videos[index];
-        let newObject = { ...ithvideo, "comments": [...ithvideo.comments, obj] };
-        setVideos([...videos, newObject]);
+
+        // let index = videos.findIndex((video) => {
+        //     return video.puid == puid;
+        // });
+        // let ithvideo = videos[index];
+        // let newObject = { ...ithvideo, "comments": [...ithvideo.comments, obj] };
+        // let tempVideos=[...videos];
+        // tempVideos[index]=newObject;
+        // setVideos(tempVideos);
     }
     //giving styles
     const useStyles = makeStyles({
@@ -400,10 +412,11 @@ function Feed(props) {
                         <div className="feed">
                             {videos.map((videoObj, idx) => {
                                 let like = videoObj.likes.length;
+                                let isLiked=videoObj.isLiked;
                                 console.log(like, idx);
                                 return (<div className="video-container" id="video-container" key={idx}>
                                     <Video muted="muted" src={videoObj.postUrl} id={videoObj.puid} profilePic={videoObj.profilePic} userName={videoObj.userName} ></Video>
-                                    <FavouriteIcon className={like == false ? classes.notSelectedHeart : classes.selectedHeart}
+                                    <FavouriteIcon className={isLiked == false ? classes.notSelectedHeart : classes.selectedHeart}
                                         onClick={() => { handleLiked(videoObj.puid) }}
                                     ></FavouriteIcon>
                                     <div className={classes.noOfLikes}>{like}</div>
@@ -457,6 +470,8 @@ function Video(props) {
 
 function Overlay(props) {
     const [open, setOpen] = React.useState(false);
+    const [comment, setComment] = useState("");
+    let myRef=useRef(null);
     const handleClose = () => {
         setOpen(false);
     };
@@ -464,11 +479,14 @@ function Overlay(props) {
         setOpen(!open);
     };
     const { puid, handleCommentAdded, comments } = props;
-    const [comment, setComment] = useState("");
     const handleComment = (e) => {
         const tempcomment = e.target.value;
         setComment(tempcomment);
     }
+    useEffect(()=>{
+        myRef.current.click();
+        console.log(myRef.current.click());
+    },[]);
     // "comment": comment,
     // "userPrifilePic": user.profileUrl,
     // "userName": user.name,
@@ -492,7 +510,7 @@ function Overlay(props) {
     const classes = useStyles();
     return (
         <div className={classes.main_container}>
-            <TextField onChange={
+            <TextField ref={myRef} onChange={
                 (e) => {
                     handleComment(e);
                 }}
@@ -508,9 +526,10 @@ function Overlay(props) {
                 }}
                 variant="standard"
             />
-            <Button className={classes.button} size="small" color="secondary" variant="contained" onClick={() => {
+            <Button className={classes.button} size="small" color="secondary" variant="contained" onClick={(e) => {
                 handleCommentAdded(puid, comment);
-            }}>button</Button>
+                setComment("");
+            }}>comment</Button>
             <Paper style={{ padding: "15px 7px", marginTop: 10, width: "16rem" }}>
                 {comments.map((commentObj,idx) => {
                     return (<div key={idx}>

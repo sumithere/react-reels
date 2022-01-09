@@ -29,11 +29,10 @@ function Profile() {
     const [state,setState] = useState(false);
     let { currentUser } = useContext(AuthContext);
     useEffect(async () => {
-        let userRef = await database.users.doc(currentUser.uid);
-        userRef.get().then((doc) => {
+        let userRef = database.users.doc(currentUser.uid);
+        userRef.get().then(async(doc) => {
             if (doc.exists) {
                 setUser(doc.data());
-                setProfileloader(false);
             }
             let userData = doc.data();
             console.log(userData);
@@ -41,17 +40,19 @@ function Profile() {
             let postsArr = [];
             for (let i = 0; i < arr.length; i++) {
                 let postRef = database.posts.doc(arr[i]);
-                postRef.get().then(async (doc) => {
+                let doc=await postRef.get();
                     if (doc.exists) {
-                        let postData = await doc.data();
+                        let postData = doc.data();
                         console.log(postData);
+                        // postsArr=[...postsArr,postData.Url];
                         postsArr.push(postData.postUrl);
                     }
-                })
             }
             console.log(postsArr);
-            setPosts(postsArr);
+            // if(postsArr.length>0)
+            setPosts([...postsArr,...posts]);
             console.log(posts);
+            setProfileloader(false);
         })
     }, [])
     const useStyle = makeStyles({

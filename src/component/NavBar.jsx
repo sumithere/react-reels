@@ -36,7 +36,7 @@ export default function NavBar(props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" style={{ height: "3rem" }}>
                 <Toolbar style={{ position: "relative", top: "-11px" }}>
-                    (
+                    
                     <div style={{ height: "3rem" }}>
                         <IconButton
                             size="large"
@@ -67,7 +67,7 @@ export default function NavBar(props) {
                             <MenuItem onClick={props.handleSignout}>Logout</MenuItem>
                         </Menu>
                     </div>
-                    )
+                    
                 </Toolbar>
             </AppBar>
         </Box>

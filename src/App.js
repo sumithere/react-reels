@@ -30,7 +30,7 @@ function PrivateRoute(props){
   let {currentUser}=useContext(AuthContext);
   return(<Route {...props} render={
     (props)=>{
-        return (currentUser!=null?<Component {...props}></Component>:<Redirect to="/login "></Redirect>)
+        return (currentUser!=null?<Component {...props}></Component>:<Redirect to="/login"></Redirect>)
     }
   } ></Route>)
 

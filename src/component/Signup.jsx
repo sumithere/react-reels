@@ -83,7 +83,7 @@ function Signup(props) {
     })
     let classes = useStyles();
     return (
-        <Grid container style={{ justifyContent: "center" }} >
+        // <Grid container style={{ justifyContent: "center" }} >
             <Grid item xs={8} sm={6} md={4}>
                 <Card className={classes.cardSize}>
                     <CardActionArea>
@@ -126,7 +126,7 @@ function Signup(props) {
                     <TextLink link="/login" text="login"></TextLink>
                 </div>}</Button>
             </Grid>
-        </Grid>
+        
 
     );
 }
